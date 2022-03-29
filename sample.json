@@ -1,0 +1,22 @@
+{
+    "SourceToTargetID": 1,
+    "SourceSystemCode": "AW",
+    "SourceSystemName": "AdventureWorks",
+    "PipelineID": 1,
+    "PipelineName": "BronseToSilver",
+    "FlowID": 1,
+    "FlowName": "SalesLTAddress",
+    "NotebookName": "DataProcessing",
+    "SourceStorageAccount": "synapsepiethein",
+    "SourceContainer": "synapsedata",
+    "SourcePath": "/landingzone/AdventureWorks/",
+    "SourceFileType": "CSV",
+    "TargetStorageAccount": "synapsepiethein",
+    "TargetContainer": "synapsedata",
+    "TargetPath": "/processedzone/AdventureWorks",
+    "TargetFileType": "DELTA",
+    "SinkOperation": "Merge",
+    "PrimaryKey": "AddressID",
+    "BusinessKey": "AddressID",
+    "PipelineDescription": "Transform CSVs to Delta files" 
+}
