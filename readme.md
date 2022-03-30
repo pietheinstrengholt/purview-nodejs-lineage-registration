@@ -13,8 +13,10 @@ In order to deploy this NodeJS web app you need to have the following:
 * Both Node.js and npm installed. Run the command node --version to verify that Node.js is installed.
 * [Visual Studio Code](https://code.visualstudio.com/) installed
 * The [Azure App Service extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice) installed
-
-Clone the purview-nodejs-lineage-registration repository and run the following commands:
+* Clone the purview-nodejs-lineage-registration repository 
+* Copy [sample.env](./sample.env) to .env
+* Within .env, modify the following parameters: ENDPOINT, AZURE_CLIENT_SECRET, AZURE_CLIENT_ID and AZURE_TENANT_ID
+* Run the following commands:
 
 ```
 npm install
@@ -35,4 +37,3 @@ Open http://localhost:8080, and verify your application is running. When you see
 To validate the deployment, you can try out and use Postman for submitting your first lineage registration. Within the repository, there's a [sample.json](./sample.json) message. With a single POST API call, it registers a source, target and lineage process step. When everything works as expected, you should see a Status 200 message.
 
 ![Purview](lineagepurview.png)
-
