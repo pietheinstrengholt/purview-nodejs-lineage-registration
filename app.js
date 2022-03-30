@@ -123,15 +123,15 @@ async function createEntity(access_token, input) {
     }
 }
 
+//route for GET: showing that the app is up and running
 app.get('/', jsonParser, async (req, res) => {
     res.send('Purview nodejs lineage registration app is running!');
 })
 
+//route for POST: handling metadata registration
 app.post('/', jsonParser, async (req, res) => {
 
-    console.log(req.body);
-
-    //TODO: replace with POST input
+    //map POST input to input array
     const input = { 
         SourceStorageAccount: req.body.SourceStorageAccount, 
         SourceContainer: req.body.SourceContainer, 
@@ -147,6 +147,7 @@ app.post('/', jsonParser, async (req, res) => {
         PipelineDescription: req.body.PipelineDescription
     };
 
+    //select input arguments for source
     inputSource = {
         StorageAccount: input.SourceStorageAccount,
         Container: input.SourceContainer,
@@ -155,6 +156,7 @@ app.post('/', jsonParser, async (req, res) => {
         Description: input.SourceDescription
     }
 
+    //select input arguments for target
     inputTarget = {
         StorageAccount: input.TargetStorageAccount,
         Container: input.TargetContainer,
@@ -163,6 +165,7 @@ app.post('/', jsonParser, async (req, res) => {
         Description: input.TargetDescription
     }
 
+    //authenticate to purview
     let success = await authenticatePurview();
     if (success) {
         let access_token = success.access_token;
@@ -178,6 +181,7 @@ app.post('/', jsonParser, async (req, res) => {
         guidTarget = Object.values(entityTarget.guidAssignments)[0];
         console.log("Created node object: " + guidTarget);
 
+        //create array for making lineage call
         inputLineage = {
             //lower case and replace spaces with dashes
             PipelineName: input.PipelineName.replace(/\s+/g, '-').toLowerCase(),
@@ -186,9 +190,11 @@ app.post('/', jsonParser, async (req, res) => {
             guidTarget: guidTarget
         }
 
+        //create lineage in purview
         let lineage = await createLineage(access_token, inputLineage);
         console.log("Created process object: " + Object.values(lineage.guidAssignments)[0]);
 
+        //generate response message
         var response = {
             status  : 200,
             success : {
@@ -199,11 +205,13 @@ app.post('/', jsonParser, async (req, res) => {
             }
         }
         
+        //send response
         res.end(JSON.stringify(response));
 
     }
 })
 
+//start server on port 8080
 var server = app.listen(8080, function () {
    var host = server.address().address
    var port = server.address().port
