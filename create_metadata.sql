@@ -155,6 +155,45 @@ INSERT INTO [dbo].[Flows](
 )
 GO
 
+INSERT INTO [dbo].[Flows](
+    PipelineID,
+    FlowName,
+    Description,
+    NotebookName,
+    SourceStorageAccount,
+    SourceContainer,
+    SourcePath,
+    SourceFileType,
+    TargetStorageAccount,
+    TargetContainer,
+    TargetPath,
+    TargetFileType,
+    SinkOperation,
+    PrimaryKey,
+    BusinessKey,
+    Status,
+    UpdateAt
+)VALUES(
+    1,
+    'SalesLTCustomer',
+    'Transform SalesLTCustomer',
+    'DataProcessing',
+    'synapsepiethein',
+    'synapsedata',
+    '/landingzone/AdventureWorks/',
+    'CSV',
+    'synapsepiethein',
+    'synapsedata',
+    '/processedzone/AdventureWorks',
+    'DELTA',
+    'Merge',
+    'CustomerID',
+    'CustomerID',
+    'Active',
+     GETDATE()
+)
+GO
+
 CREATE TABLE PipelineLog(
     PipelineID varchar(100) null,
     Stage varchar(50) null,
